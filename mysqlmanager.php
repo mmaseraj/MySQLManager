@@ -580,7 +580,6 @@ class MySQLManager {
         $this->unsetAll();
 
         unset( $this->_currentImplement );
-        unset( $this->_currentImplement );
         unset( $finalSelect );
         unset( $finalTables );
         unset( $finalJoin );
