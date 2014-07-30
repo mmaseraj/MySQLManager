@@ -1,11 +1,9 @@
 MySQLManager
 ============
-
 Manage MySQL statements with PHP easily using OOP inherited methods
 
 ## Installing
 You need first to include `mysqlmanager.php` and `mysqliadapter.php`, these files includes `MySQLManager` and `MySQLIAdapter` classes.
-
 ```php
 <?php
 // require library classes
@@ -27,7 +25,7 @@ $db = MySQLIAdapter::getConnection();
 ```php
 <?php
 // selecting from just one table
-$db->select($rows)->table('tbl_name')->execute();
+$db->select('.')->table('tbl_name')->execute();
 
 // selecting from more than one table
  $db ->select( 'fields from table_1' )
@@ -40,6 +38,7 @@ $db->select($rows)->table('tbl_name')->execute();
 				->on( 'table_3.field = table_1.field' )
 
 ```
+`select()` parameter could be a string `*`, `id, name` or an array `array('id', 'name');`
 #### Create statement
 ```php
 <?php
@@ -58,7 +57,6 @@ $db->create()->row('row_name', array(
 ))->table('tbl_name')->execute();
 ```
 `primary`, `auto_inc` and `varchar|20` are automatically transferred to their equivalent
-
 #### Managing tables data
 ```php
 <?php
@@ -79,7 +77,6 @@ $db->delete()->table('tbl_name')->where('id', '>', 10)->execute();
 $db->truncate()->table('tbl_name')->execute();
 ```
 `Insert` and `update` parameter must be an array of `mysql_row => value`
-
 #### Drop statement
 ```php
 <?php
@@ -92,7 +89,6 @@ $db->drop()->table('db_name')->execute();
 // dropping table row
 $db->drop()->row('tbl_row')->table('tbl_name');
 ```
-
 #### Information about last performed query
 ``` php
 <?php
@@ -111,6 +107,20 @@ $db->select('*')->table('tbl_name')->execute()->rows();
 // fetch array of last select statement
 $db->select('*')->table('tbl_name')->execute()->result()
 ```
+#### Where, limit, order in query statement
+```php
+<?php
+// setting order in select() statement
+// order type: desc, asc
+ $db->select('*')->table('tbl_name')->order('row_name', 'desc');
 
+// setting where, (Qor), (Qand) in update, select, delete statement
+// Qor and Qand will be translated to (AND) and (OR) of mysql query statement
+// Where, Qand, Qor expression:  LIKE_START, LIKE_END, LIKE_BOTH
+$db->select('*')->table('tbl_name')->where('id', '<', 20)->Qand('name', 'LIKE', 'salema')->execute();
+
+// setting limitation of results 
+$db->select('*')->table('tbl_name')->limit(4)->execute()
+```
 ### License
-This project is licensed under the CC0 1.0 Universal license. See the LICENSE file for details
+This project is licensed under the CC0 1.0 Universal license. See the LICENSE file for details.
